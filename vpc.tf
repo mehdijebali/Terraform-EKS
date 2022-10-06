@@ -13,6 +13,6 @@ module "vpc" {
   enable_vpn_gateway = false
 
   tags = {
-    Name = "${var.cluster-name}-vpc"
+    Name = "${var.CLUSTER-NAME}-vpc"
   }
 }
