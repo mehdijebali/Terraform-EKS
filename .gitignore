@@ -1,0 +1,7 @@
+terraform.tfvars
+levelup_key
+levelup_key.pub
+.terraform
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
