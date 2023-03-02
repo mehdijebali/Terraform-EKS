@@ -36,3 +36,14 @@ variable "AMAZONEKS_SERVICE_POLICY_ARN" {
   default = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
 }
 
+variable "AMAZONEKS_WORKERNODE_POLICY_ARN" {
+  default = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+}
+
+variable "AMAZONEKS_CNI_POLICY_ARN" {
+  default = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+}
+
+variable "AMAZONEC2_CONTAINER_REGISTRY_READONLY_ARN" {
+  default = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+}
