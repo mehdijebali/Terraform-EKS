@@ -55,3 +55,11 @@ variable "WORKER_NODE_DESIRED_SIZE" {
 variable "WORKER_NODE_MAX_SIZE" {
   default = 1
 }
+
+variable "EKS_CLUSTER_ROLE_NAME" {
+  default = "eks-cluster"
+}
+
+variable "EKS_NODES_ROLE_NAME" {
+  default = "eks-node-group"
+}
