@@ -27,3 +27,12 @@ variable "VPC_PUBLIC_SUBNETS" {
   type = list
   default = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
 }
+
+variable "AMAZON_EKS_CLUSTER_POLICY_ARN" {
+  default = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+}
+
+variable "AMAZONEKS_SERVICE_POLICY_ARN" {
+  default = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
+}
+
