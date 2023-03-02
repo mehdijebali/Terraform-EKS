@@ -47,3 +47,11 @@ variable "AMAZONEKS_CNI_POLICY_ARN" {
 variable "AMAZONEC2_CONTAINER_REGISTRY_READONLY_ARN" {
   default = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 }
+
+variable "WORKER_NODE_DESIRED_SIZE" {
+  default = 1
+}
+
+variable "WORKER_NODE_MAX_SIZE" {
+  default = 1
+}
