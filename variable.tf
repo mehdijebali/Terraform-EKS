@@ -11,6 +11,10 @@ variable "NODE_GROUP_NAME" {
   default = "eks_node"
 }
 
+variable "VPC_NAME" {
+  default = "vpc-eks"
+}
+
 variable "VPC_PRIVATE_SUBNETS" {
   type = list
   default = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
