@@ -1,15 +1,10 @@
 provider "aws" {
   region = var.AWS_REGION
 }
-
-data "aws_region" "current" {
-}
-
-data "aws_availability_zones" "available" {
-}
-
-provider "http" {
-}
+data "aws_region" "current" {}
+data "aws_availability_zones" "available" {}
+provider "http" {}
+provider "kubectl" {}
 
 module "vpc" {
   source             = "terraform-aws-modules/vpc/aws"
