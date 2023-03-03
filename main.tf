@@ -4,7 +4,9 @@ provider "aws" {
 data "aws_region" "current" {}
 data "aws_availability_zones" "available" {}
 provider "http" {}
-provider "kubectl" {}
+provider "kubectl" {
+  host = aws_eks_cluster.aws_eks.endpoint
+}
 
 module "vpc" {
   source             = "terraform-aws-modules/vpc/aws"
