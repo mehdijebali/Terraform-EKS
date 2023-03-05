@@ -11,13 +11,13 @@ resource "aws_iam_role" "AmazonEKSLoadBalancerControllerRole" {
         {
             "Effect": "Allow",
             "Principal": {
-                "Federated": "arn:aws:iam::111122223333:oidc-provider/oidc.eks.region-code.amazonaws.com/id/*"
+              "Federated": "arn:aws:iam::${var.AWS_ACCOUNT_ID}:oidc-provider/oidc.eks.${var.AWS_REGION}.amazonaws.com/id/*"
             },
             "Action": "sts:AssumeRoleWithWebIdentity",
             "Condition": {
                 "StringEquals": {
-                    "oidc.eks.region-code.amazonaws.com/id/*:aud": "sts.amazonaws.com",
-                    "oidc.eks.region-code.amazonaws.com/id/*:sub": "system:serviceaccount:kube-system:aws-load-balancer-controller"
+                    "oidc.eks.${var.AWS_ACCOUNT_ID}.amazonaws.com/id/*:aud": "sts.amazonaws.com",
+                    "oidc.eks.${var.AWS_ACCOUNT_ID}.amazonaws.com/id/*:sub": "system:serviceaccount:kube-system:aws-load-balancer-controller"
                 }
             }
         }
