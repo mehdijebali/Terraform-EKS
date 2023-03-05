@@ -32,3 +32,7 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
   policy_arn = var.AMAZONEC2_CONTAINER_REGISTRY_READONLY_ARN
   role       = aws_iam_role.eks_nodes.name
 }
+
+resource "aws_iam_policy" "AWSLoadBalancerControllerIAMPolicy" {
+  policy = file("./policies/lbc_iam_policy.json")
+}
