@@ -3,6 +3,29 @@ resource "aws_iam_role" "eks_cluster" {
   assume_role_policy = file("./policies/eks_cluster.json")
 }
 
+resource "aws_iam_role" "AmazonEKSLoadBalancerControllerRole" {
+  assume_role_policy = <<EOF
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::111122223333:oidc-provider/oidc.eks.region-code.amazonaws.com/id/*"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringEquals": {
+                    "oidc.eks.region-code.amazonaws.com/id/*:aud": "sts.amazonaws.com",
+                    "oidc.eks.region-code.amazonaws.com/id/*:sub": "system:serviceaccount:kube-system:aws-load-balancer-controller"
+                }
+            }
+        }
+    ]
+}
+  EOF
+}
+
 resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
   policy_arn = var.AMAZON_EKS_CLUSTER_POLICY_ARN
   role       = aws_iam_role.eks_cluster.name
