@@ -941,6 +941,6 @@ resource "kubectl_manifest" "lbc" {
     aws_eks_node_group.node,
     kubectl_manifest.lbc-serviceaccount,
     kubectl_manifest.externaldns,
-    kubectl_manifest.kubectl_manifest
+    kubectl_manifest.certmanager
   ]
 }
