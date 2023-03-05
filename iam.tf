@@ -59,3 +59,8 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
 resource "aws_iam_policy" "AWSLoadBalancerControllerIAMPolicy" {
   policy = file("./policies/lbc_iam_policy.json")
 }
+
+resource "aws_iam_role_policy_attachment" "AWSLoadBalancerControllerIAMPolicy" {
+  policy_arn = aws_iam_policy.AWSLoadBalancerControllerIAMPolicy.arn
+  role       = aws_iam_role.AmazonEKSLoadBalancerControllerRole.name
+}
