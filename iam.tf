@@ -60,6 +60,10 @@ resource "aws_iam_policy" "AWSLoadBalancerControllerIAMPolicy" {
   policy = file("./policies/lbc_iam_policy.json")
 }
 
+resource "aws_iam_policy" "AmazonEKS_EFS_CSI_Driver_Policy" {
+  policy = file("./policies/cfs_iam_policy.json")
+}
+
 resource "aws_iam_role_policy_attachment" "AWSLoadBalancerControllerIAMPolicy" {
   policy_arn = aws_iam_policy.AWSLoadBalancerControllerIAMPolicy.arn
   role       = aws_iam_role.AmazonEKSLoadBalancerControllerRole.name
