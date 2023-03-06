@@ -7,6 +7,10 @@ variable "AWS_REGION" {
   default = "eu-west-1"
 }
 
+variable "AWS_ACCOUNT_ID" {
+  default = "682446082170"
+}
+
 variable "NODE_GROUP_NAME" {
   default = "eks_node"
 }

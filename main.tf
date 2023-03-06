@@ -1,14 +1,11 @@
 provider "aws" {
   region = var.AWS_REGION
 }
-
-data "aws_region" "current" {
-}
-
-data "aws_availability_zones" "available" {
-}
-
-provider "http" {
+data "aws_region" "current" {}
+data "aws_availability_zones" "available" {}
+provider "http" {}
+provider "kubectl" {
+  host = aws_eks_cluster.aws_eks.endpoint
 }
 
 module "vpc" {
