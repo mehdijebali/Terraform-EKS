@@ -25,7 +25,25 @@ resource "kubectl_manifest" "lbc-serviceaccount" {
     name: aws-load-balancer-controller
     namespace: kube-system
     annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::${var.AWS_ACCOUNT_ID}:role/AmazonEKSLoadBalancerControllerRole
+      eks.amazonaws.com/role-arn: ${aws_iam_role.AmazonEKSLoadBalancerControllerRole.arn}
+  YAML
+  depends_on = [
+    aws_eks_cluster.aws_eks,
+    aws_eks_node_group.node
+  ]
+}
+
+resource "kubectl_manifest" "efs-service-account" {
+  yaml_body = <<YAML
+  apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    labels:
+      app.kubernetes.io/name: aws-efs-csi-driver
+    name: efs-csi-controller-sa
+    namespace: kube-system
+    annotations:
+      eks.amazonaws.com/role-arn: ${aws_iam_role.AmazonEKS_EFS_CSI_DriverRole.arn}
   YAML
   depends_on = [
     aws_eks_cluster.aws_eks,

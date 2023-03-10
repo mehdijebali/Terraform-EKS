@@ -1,5 +1,5 @@
 resource "aws_iam_role" "eks_cluster" {
-  name               = var.EKS_NODES_ROLE_NAME
+  name               = var.EKS_CLUSTER_ROLE_NAME
   assume_role_policy = file("./policies/eks_cluster.json")
 }
 
@@ -38,7 +38,7 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSServicePolicy" {
 
 resource "aws_iam_role" "eks_nodes" {
   name               = var.EKS_NODES_ROLE_NAME
-  assume_role_policy = file("./policies/eks_cluster.json")
+  assume_role_policy = file("./policies/eks_cluster_node.json")
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodePolicy" {
@@ -60,7 +60,38 @@ resource "aws_iam_policy" "AWSLoadBalancerControllerIAMPolicy" {
   policy = file("./policies/lbc_iam_policy.json")
 }
 
+resource "aws_iam_policy" "AmazonEKS_EFS_CSI_Driver_Policy" {
+  policy = file("./policies/cfs_iam_policy.json")
+}
+
 resource "aws_iam_role_policy_attachment" "AWSLoadBalancerControllerIAMPolicy" {
   policy_arn = aws_iam_policy.AWSLoadBalancerControllerIAMPolicy.arn
   role       = aws_iam_role.AmazonEKSLoadBalancerControllerRole.name
+}
+
+resource "aws_iam_role" "AmazonEKS_EFS_CSI_DriverRole" {
+  assume_role_policy = <<EOF
+  {
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::${var.AWS_ACCOUNT_ID}:oidc-provider/oidc.eks.${var.AWS_REGION}.amazonaws.com/id/*"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "oidc.eks.${var.AWS_REGION}.amazonaws.com/id/*:sub": "system:serviceaccount:kube-system:efs-csi-controller-sa"
+          }
+        }
+      }
+    ]
+  }
+  EOF
+}
+
+resource "aws_iam_role_policy_attachment" "AmazonEKS_EFS_CSI_Driver_Policy" {
+  policy_arn = aws_iam_policy.AmazonEKS_EFS_CSI_Driver_Policy.arn
+  role       = aws_iam_role.AmazonEKS_EFS_CSI_DriverRole.name
 }
