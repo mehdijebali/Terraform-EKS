@@ -25,7 +25,7 @@ resource "kubectl_manifest" "lbc-serviceaccount" {
     name: aws-load-balancer-controller
     namespace: kube-system
     annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::${var.AWS_ACCOUNT_ID}:role/AmazonEKSLoadBalancerControllerRole
+      eks.amazonaws.com/role-arn: ${aws_iam_role.AmazonEKSLoadBalancerControllerRole.arn}
   YAML
   depends_on = [
     aws_eks_cluster.aws_eks,
