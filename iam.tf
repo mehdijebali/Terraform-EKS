@@ -68,3 +68,25 @@ resource "aws_iam_role_policy_attachment" "AWSLoadBalancerControllerIAMPolicy" {
   policy_arn = aws_iam_policy.AWSLoadBalancerControllerIAMPolicy.arn
   role       = aws_iam_role.AmazonEKSLoadBalancerControllerRole.name
 }
+
+resource "aws_iam_role" "AmazonEKS_EFS_CSI_DriverRole" {
+  assume_role_policy = <<EOF
+  {
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::${var.AWS_ACCOUNT_ID}:oidc-provider/oidc.eks.${var.AWS_REGION}.amazonaws.com/id/*"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "oidc.eks.${var.AWS_REGION}.amazonaws.com/id/*:sub": "system:serviceaccount:kube-system:efs-csi-controller-sa"
+          }
+        }
+      }
+    ]
+  }
+  EOF
+}
