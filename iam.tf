@@ -38,7 +38,7 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSServicePolicy" {
 
 resource "aws_iam_role" "eks_nodes" {
   name               = var.EKS_NODES_ROLE_NAME
-  assume_role_policy = file("./policies/eks_cluster.json")
+  assume_role_policy = file("./policies/eks_cluster_node.json")
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodePolicy" {
