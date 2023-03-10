@@ -90,3 +90,8 @@ resource "aws_iam_role" "AmazonEKS_EFS_CSI_DriverRole" {
   }
   EOF
 }
+
+resource "aws_iam_role_policy_attachment" "AmazonEKS_EFS_CSI_Driver_Policy" {
+  policy_arn = aws_iam_policy.AmazonEKS_EFS_CSI_Driver_Policy.arn
+  role       = aws_iam_role.AmazonEKS_EFS_CSI_DriverRole.name
+}
