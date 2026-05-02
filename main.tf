@@ -1,3 +1,16 @@
+terraform {
+  required_version = ">= 1.5"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+  backend "http" {
+    # Leave this block empty or with just the basic structure
+  }
+}
+
 provider "aws" {
   region = var.AWS_REGION
 }
