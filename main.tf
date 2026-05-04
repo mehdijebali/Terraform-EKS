@@ -5,21 +5,22 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
+    http = {
+      source  = "hashicorp/http"
+      version = "~> 3.0"
+    }
+    kubectl = {
+      source  = "gavinbunney/kubectl"
+      version = "~> 1.14.0" 
+    }
   }
   backend "http" {
     # Leave this block empty or with just the basic structure
   }
 }
 
-provider "aws" {
-  region = var.AWS_REGION
-}
 data "aws_region" "current" {}
 data "aws_availability_zones" "available" {}
-provider "http" {}
-provider "kubectl" {
-  host = aws_eks_cluster.aws_eks.endpoint
-}
 
 module "vpc" {
   source             = "terraform-aws-modules/vpc/aws"
